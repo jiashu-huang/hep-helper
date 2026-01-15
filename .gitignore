@@ -1,0 +1,63 @@
+# ---------------------------------------------------------------------------
+# Build outputs (CMake / Make)
+# ---------------------------------------------------------------------------
+/build/
+/build-*/
+/cmake-build-*/
+/out/
+/CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+install_manifest.txt
+CTestTestfile.cmake
+Testing/
+Makefile
+compile_commands.json
+
+# User-specific CMake presets (shared presets should be tracked)
+CMakeUserPresets.json
+
+# ---------------------------------------------------------------------------
+# Compiled objects, libraries, and executables
+# ---------------------------------------------------------------------------
+*.o
+*.obj
+*.lo
+*.la
+*.a
+*.so
+*.dylib
+*.dll
+*.exe
+*.out
+*.d
+*.pch
+
+# Example tool binary (built locally)
+hep_list_root_fields
+
+# ---------------------------------------------------------------------------
+# IDE / editor / OS cruft
+# ---------------------------------------------------------------------------
+.DS_Store
+Thumbs.db
+
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ---------------------------------------------------------------------------
+# Logs and reports (generated)
+# ---------------------------------------------------------------------------
+*.log
+
+# ---------------------------------------------------------------------------
+# Optional: local data or generated outputs.
+# Uncomment the patterns below if you do not want to track these artifacts.
+# ---------------------------------------------------------------------------
+# *.root
+# *.csv
+# *.txt
+# *_fields.csv
