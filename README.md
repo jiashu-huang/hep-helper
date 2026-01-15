@@ -22,18 +22,7 @@ cmake --build build
 The tool binaries are produced in `build/` (for example,
 `build/hep_list_root_fields`).
 
-## Tools
-
-`hep_list_root_fields` writes branch names and types to a CSV file.
-
-```sh
-./build/hep_list_root_fields file.root output.csv [tree_name]
-```
-
-Notes:
-
-- `tree_name` defaults to `Events`.
-- Output columns: `tree,branch,type`.
+Tool usage and source layout are documented in `src/README.md`.
 
 ## Using as a Submodule
 
@@ -62,6 +51,14 @@ Header: `include/hep_helper/root_fields.h`
 void WriteRootFieldsCsv(const std::string& file_path,
                         const std::string& output_path,
                         const std::string& tree_name = "Events");
+```
+
+Header: `include/hep_helper/root_event.h`
+
+```cpp
+void WriteFirstRootEventTxt(const std::string& file_path,
+                            const std::string& output_path,
+                            const std::string& tree_name = "Events");
 ```
 
 ## Optional: Build Settings

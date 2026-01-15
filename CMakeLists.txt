@@ -13,6 +13,7 @@ find_package(ROOT REQUIRED COMPONENTS Core RIO Tree)
 # Build the core helper library.
 add_library(hep_helper
   src/root_fields.cpp
+  src/root_event.cpp
 )
 
 # Require C++17 and expose headers to dependents.
@@ -27,4 +28,7 @@ if(HEP_HELPER_BUILD_TOOLS)
   # Build the CLI tool and link it to the library.
   add_executable(hep_list_root_fields src/root_fields_main.cpp)
   target_link_libraries(hep_list_root_fields PRIVATE hep_helper)
+
+  add_executable(hep_dump_root_event src/root_event_main.cpp)
+  target_link_libraries(hep_dump_root_event PRIVATE hep_helper)
 endif()
