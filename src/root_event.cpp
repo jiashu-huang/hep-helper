@@ -1,7 +1,9 @@
 #include "hep_helper/root_event.h"
 
 #include <fstream>
+#include <iomanip>
 #include <memory>
+#include <sstream>
 #include <stdexcept>
 #include <string>
 
@@ -9,6 +11,7 @@
 #include "TCollection.h"
 #include "TFile.h"
 #include "TLeaf.h"
+#include "TLeafC.h"
 #include "TTree.h"
 
 namespace hep_helper {
@@ -50,15 +53,42 @@ std::string LeafTypeName(const TLeaf* leaf) {
   return "unknown";
 }
 
-std::string LeafValueString(TLeaf* leaf) {
+bool IsIntegerType(const std::string& type_name) {
+  return type_name == "Bool_t" || type_name == "Char_t" ||
+         type_name == "UChar_t" || type_name == "Short_t" ||
+         type_name == "UShort_t" || type_name == "Int_t" ||
+         type_name == "UInt_t" || type_name == "Long64_t" ||
+         type_name == "ULong64_t";
+}
+
+std::string NumericValueString(const TLeaf* leaf, int index) {
   if (!leaf) {
     return "";
   }
 
+  const char* type_name = leaf->GetTypeName();
+  if (type_name && IsIntegerType(type_name)) {
+    return std::to_string(leaf->GetValueLong64(index));
+  }
+
+  std::ostringstream out;
+  out << std::setprecision(17) << leaf->GetValueLongDouble(index);
+  return out.str();
+}
+
+std::string LeafValueString(const TLeaf* leaf) {
+  if (!leaf) {
+    return "";
+  }
+
+  if (const auto* leaf_c = dynamic_cast<const TLeafC*>(leaf)) {
+    const char* value = leaf_c->GetValueString();
+    return value ? value : "";
+  }
+
   int ndata = leaf->GetNdata();
   if (ndata <= 1) {
-    const char* value = leaf->GetValueString(0);
-    return value ? value : "";
+    return NumericValueString(leaf, 0);
   }
 
   std::string result = "[";
@@ -66,10 +96,7 @@ std::string LeafValueString(TLeaf* leaf) {
     if (i > 0) {
       result += ", ";
     }
-    const char* value = leaf->GetValueString(i);
-    if (value) {
-      result += value;
-    }
+    result += NumericValueString(leaf, i);
   }
   result += "]";
   return result;
