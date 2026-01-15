@@ -37,6 +37,25 @@ cmake --build build
 The tools are built by default (`HEP_HELPER_BUILD_TOOLS=ON`). If you only want
 the library, configure with `-DHEP_HELPER_BUILD_TOOLS=OFF`.
 
+## Using as a Submodule
+
+Add the repo as a git submodule inside your analysis project:
+
+```sh
+git submodule add <repo-url> hep-helper
+git submodule update --init --recursive
+```
+
+Then wire it into your analysis CMake project:
+
+```cmake
+add_subdirectory(hep-helper)
+target_link_libraries(your_target PRIVATE hep_helper)
+```
+
+Make sure the ROOT environment is set up before configuring your parent
+project so CMake can find `ROOT`.
+
 ## Tools
 
 * `hep_list_root_fields`: list branch names and types for a ROOT TTree.
