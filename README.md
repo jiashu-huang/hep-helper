@@ -74,3 +74,14 @@ cmake --build build
 
 - CMake cannot find ROOT: ensure your ROOT environment is sourced before
   running CMake.
+
+## In Case of Linux Server
+
+```sh
+source /cvmfs/cms.cern.ch/cmsset_default.sh
+cd # <SOME_CMSSW>/src/
+eval `scramv1 runtime -sh`
+cd -
+cmake -S . -B build -DROOT_DIR=$(root-config --prefix)/cmake
+cmake --build build
+```
